@@ -1,0 +1,67 @@
+#!/bin/bash
+set -e
+
+# -------------------------------
+# Update system and install tools
+# -------------------------------
+sudo yum update -y
+sudo yum install -y wget git
+
+# -------------------------------
+# Install Java 17 (required for Jenkins & Maven)
+# -------------------------------
+sudo yum install -y java-17-amazon-corretto
+echo "Java version:"
+java -version
+
+# -------------------------------
+# Install Maven
+# -------------------------------
+sudo yum install -y maven
+echo "Maven version:"
+mvn -version
+
+# -------------------------------
+# Add Jenkins repo and import GPG key
+# -------------------------------
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+# -------------------------------
+# Install Jenkins
+# -------------------------------
+sudo yum install -y jenkins
+
+# Start and enable Jenkins service
+sudo systemctl daemon-reload
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+echo "Jenkins status:"
+sudo systemctl status jenkins --no-pager
+
+# -------------------------------
+# Create a sample Maven project with pom.xml
+# -------------------------------
+PROJECT_DIR=~/my-maven-app
+mkdir -p $PROJECT_DIR
+cd $PROJECT_DIR
+
+# Create a basic pom.xml
+cat <<EOL > pom.xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>my-maven-app</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>My Maven App</name>
+    <description>A simple Maven project created by script</description>
+</project>
+EOL
+
+echo "Sample Maven project created at $PROJECT_DIR"
