@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-echo "===== Checking Java 11 ====="
+echo "===== Checking Java 11 (Amazon Corretto) ====="
 if ! java -version 2>&1 | grep -q "11"; then
-  echo "Java 11 not found. Installing..."
-  dnf install -y java-11-openjdk
+  echo "Java 11 not found. Installing Amazon Corretto 11..."
+  dnf install -y java-11-amazon-corretto
 else
   echo "Java 11 already installed."
 fi
@@ -27,6 +27,8 @@ chown -R sonar:sonar /opt/sonarqube-8.9.6.50800
 chmod -R 755 /opt/sonarqube-8.9.6.50800
 
 echo "===== SonarQube installation completed ====="
-echo "Start SonarQube using:"
+echo "To start SonarQube:"
 echo "  su - sonar"
 echo "  sh /opt/sonarqube-8.9.6.50800/bin/linux-x86-64/sonar.sh start"
+echo "URL: http://<EC2-IP>:9000"
+echo "Login: admin / admin"
