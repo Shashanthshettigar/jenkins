@@ -11,7 +11,7 @@ sudo yum install -y wget git
 # Install Java 17 (required for Jenkins & Maven)
 # -------------------------------
 sudo yum install -y java-17-amazon-corretto
-echo "Java version:"
+echo "Java version:-"
 java -version
 
 # -------------------------------
