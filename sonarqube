@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-echo "===== Checking Java 11 (required for SonarQube 8.9) ====="
+echo "===== Checking Java 11 ====="
 if ! java -version 2>&1 | grep -q "11"; then
   echo "Java 11 not found. Installing..."
-  amazon-linux-extras install java-openjdk11 -y
+  dnf install -y java-11-openjdk
 else
   echo "Java 11 already installed."
 fi
 
 echo "===== Installing required tools ====="
-yum install -y wget unzip
+dnf install -y wget unzip
 
 echo "===== Creating sonar user ====="
 id sonar &>/dev/null || useradd sonar
@@ -27,8 +27,6 @@ chown -R sonar:sonar /opt/sonarqube-8.9.6.50800
 chmod -R 755 /opt/sonarqube-8.9.6.50800
 
 echo "===== SonarQube installation completed ====="
-echo "To start SonarQube:"
+echo "Start SonarQube using:"
 echo "  su - sonar"
 echo "  sh /opt/sonarqube-8.9.6.50800/bin/linux-x86-64/sonar.sh start"
-echo "URL: http://<EC2-IP>:9000"
-echo "Default Login: admin / admin"
