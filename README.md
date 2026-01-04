@@ -15,7 +15,7 @@ sudo yum install -y java-17-amazon-corretto
 # Verify Java installation
 java -version
 
-# Add Jenkins repositor
+# Add Jenkins repository
 sudo wget -O /etc/yum.repos.d/jenkins.repo \
 https://pkg.jenkins.io/redhat-stable/jenkins.repo
 
