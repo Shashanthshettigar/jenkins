@@ -22,7 +22,7 @@ if [ ! -d "sonarqube-8.9.6.50800" ]; then
   unzip sonarqube-8.9.6.50800.zip
 fi
 
-echo "===== Setting permissions ====="
+echo "==== Setting permissions ===="
 chown -R sonar:sonar /opt/sonarqube-8.9.6.50800
 chmod -R 755 /opt/sonarqube-8.9.6.50800
 
