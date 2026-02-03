@@ -4,7 +4,7 @@ set -e
 # Update system
 sudo yum update -y
 
-# Install required tools
+# Install required tool
 sudo yum install -y wget git
 
 # Install Java 17 (required)
